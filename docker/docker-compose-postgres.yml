@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  postgresql:
+    restart: always
+    image: postgres:alpine
+    volumes:
+      - ./scripts/postgres:/docker-entrypoint-initdb.d # USER/PWD/DB Created in script
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+      POSTGRES_INITDB_ARGS: "--nosync --noclean"
+      DF_PROTOCOL: HTTP
+      DF_BACK_DOMAIN: 127.0.0.1
+      DF_BACK_PORT: 8000
+    ports:
+      - "15432:5432"
+    labels:
+      - "toy-db"
